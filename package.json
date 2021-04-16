@@ -4,6 +4,7 @@
     "description": "Pure black theme for Visual Studio Code",
     "version": "0.0.1",
     "license": "MIT",
+    "icon": "assets/icon.png",
     "author": {
         "name": "Alexis Jeandeau"
     },
@@ -24,8 +25,8 @@
     ],
     "keywords": [
         "theme",
-        "black",
-        "oled"
+        "color-theme",
+        "black"
     ],
     "badges": [
         {
