@@ -1,0 +1,123 @@
+name: build
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - 'LICENSE'
+      - '.git*'
+      - '**.md'
+      - '.vscode/*'
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - master
+    paths-ignore:
+      - 'LICENSE'
+      - '.git*'
+      - '**.md'
+      - '.vscode/*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Cache the Node modules
+        id: cache-node-modules
+        uses: actions/cache@v2.1.4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install the dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Build the extension
+        run: npx vsce package
+      - name: Get short SHA
+        id: slug
+        run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+      - name: Get the package info
+        id: packageInfo
+        run: |
+          echo "::set-output name=name::$(jq -r '.name' package.json)"
+          echo "::set-output name=version::$(jq -r '.version' package.json)"
+      - name: Prepare the artifact
+        run: mkdir build && mv "${PACKAGE_FILE}" build/
+        env:
+          PACKAGE_FILE: ${{ steps.packageInfo.outputs.name }}-${{ steps.packageInfo.outputs.version }}.vsix
+      - name: Upload the built extension
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.slug.outputs.sha7 }}
+          path: build
+  release:
+    # Only release when pushing a tag
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Cache the Node modules
+        id: cache-node-modules
+        uses: actions/cache@v2.1.4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install the dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Get short SHA
+        id: slug
+        run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+      - name: Get the package info
+        id: packageInfo
+        run: |
+          echo "::set-output name=name::$(jq -r '.name' package.json)"
+          echo "::set-output name=version::$(jq -r '.version' package.json)"
+      - name: Download the build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.slug.outputs.sha7 }}
+          path: build
+      - uses: olegtarasov/get-tag@v2.1
+        id: tagName
+        with:
+          tagRegex: "v(?<version>.*)"
+      - name: Get the changelog
+        run: cat CHANGELOG.md | npx md-extract '\['"${VERSION}"'\]' > release-body.md
+        env:
+          VERSION: ${{ steps.tagName.outputs.version }}
+      - name: Create a new release
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          artifacts: build/${{ steps.packageInfo.outputs.name }}-${{ steps.packageInfo.outputs.version }}.vsix
+          bodyFile: release-body.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the extension to the Visual Studio Code Marketplace
+        run: npx vsce publish --packagePath "build/${PACKAGE_FILE}"
+        env:
+          VSCE_PAT: ${{ secrets.VSCODE_MARKETPLACE_PAT }}
+          PACKAGE_FILE: ${{ steps.packageInfo.outputs.name }}-${{ steps.packageInfo.outputs.version }}.vsix
+      - name: Publish the extension to the Eclipse Open VSX Registry
+        run: npx ovsx publish "build/${PACKAGE_FILE}"
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_REGISTRY_PAT }}
+          PACKAGE_FILE: ${{ steps.packageInfo.outputs.name }}-${{ steps.packageInfo.outputs.version }}.vsix

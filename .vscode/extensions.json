@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "bierner.color-info",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "redhat.vscode-yaml"
+    ]
+}
