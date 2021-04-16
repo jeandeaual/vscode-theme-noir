@@ -1,0 +1,56 @@
+{
+    "name": "noir",
+    "displayName": "Noir",
+    "description": "Pure black theme for Visual Studio Code",
+    "version": "0.0.1",
+    "license": "MIT",
+    "author": {
+        "name": "Alexis Jeandeau"
+    },
+    "publisher": "jeandeaual",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jeandeaual/vscode-theme-noir"
+    },
+    "homepage": "https://github.com/jeandeaual/vscode-theme-noir/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/jeandeaual/vscode-theme-noir/issues"
+    },
+    "engines": {
+        "vscode": "^1.54.0"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "keywords": [
+        "theme",
+        "black",
+        "oled"
+    ],
+    "badges": [
+        {
+            "url": "https://github.com/jeandeaual/vscode-theme-noir/workflows/build/badge.svg",
+            "href": "https://github.com/jeandeaual/vscode-theme-noir/actions?query=workflow%3Abuild",
+            "description": "GitHub build status"
+        }
+    ],
+    "contributes": {
+        "themes": [
+            {
+                "label": "Noir",
+                "uiTheme": "vs-dark",
+                "path": "./themes/Noir-color-theme.json"
+            }
+        ]
+    },
+    "devDependencies": {
+        "js-yaml": "^4.0.0",
+        "markdown-extract": "^1.0.2",
+        "ovsx": "^0.1.0",
+        "vsce": "^1.87.1"
+    },
+    "scripts": {
+        "vscode:prepublish": "yarn convertTheme",
+        "convertTheme": "npx js-yaml themes/Noir-color-theme.yaml > themes/Noir-color-theme.json"
+    }
+}

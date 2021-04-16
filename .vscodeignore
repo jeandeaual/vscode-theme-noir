@@ -1,0 +1,12 @@
+.devcontainer/**
+.github/**
+.vscode/**
+.vscode-test/**
+.gitignore
+*.vsix
+.yarnrc
+themes/*.yaml
+assets/**
+!assets/icon.png
+node_modules/**
+yarn.lock
