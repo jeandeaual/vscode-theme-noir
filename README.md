@@ -3,6 +3,8 @@
 [![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version/jeandeaual.noir.svg)](https://marketplace.visualstudio.com/items?itemName=jeandeaual.noir)
 [![build](https://github.com/jeandeaual/vscode-theme-noir/workflows/build/badge.svg)](https://github.com/jeandeaual/vscode-theme-noir/actions?query=workflow%3Abuild)
 
+Pure black theme for Visual Studio Code.
+
 ## Screenshots
 
 ### TypeScript
