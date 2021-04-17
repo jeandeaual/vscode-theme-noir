@@ -8,5 +8,6 @@
 themes/*.yaml
 assets/**
 !assets/icon.png
+examples/**
 node_modules/**
 yarn.lock

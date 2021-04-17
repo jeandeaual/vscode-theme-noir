@@ -1,8 +1,10 @@
 {
     "recommendations": [
-        "bierner.color-info",
         "dbaeumer.vscode-eslint",
+        "redhat.vscode-yaml",
+        "bierner.color-info",
         "eamodio.gitlens",
-        "redhat.vscode-yaml"
+        "adpyke.codesnap",
+        "bierner.markdown-preview-github-styles"
     ]
 }
