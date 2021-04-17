@@ -630,10 +630,13 @@ tokenColors:
   - name: Function, Special Method
     scope:
       - entity.name.function
+      - keyword.function
       - meta.function-call
       - variable.function
       - support.function
       - keyword.other.special-method
+      - meta.class-method.js entity.name.function.js
+      - variable.function.constructor
     settings:
       foreground: '#82aaff'
   - name: Block Level Variables
