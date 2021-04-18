@@ -59,7 +59,7 @@ colors:
   terminal.ansiBlack: '#1d2021'
   terminal.ansiBlue: '#458588'
   terminal.ansiBrightBlack: '#928374'
-  terminal.ansiBrightBlue: '#99c6ca'
+  terminal.ansiBrightBlue: &ansiBrightBlue '#99c6ca'
   terminal.ansiBrightCyan: '#7ec16e'
   terminal.ansiBrightGreen: '#b8bb26'
   terminal.ansiBrightMagenta: '#d3869b'
@@ -583,7 +583,7 @@ tokenColors:
     scope:
       - constant.other.color
     settings:
-      foreground: '#ffffff'
+      foreground: &white '#ffffff'
   - name: Invalid
     scope:
       - invalid
@@ -602,7 +602,7 @@ tokenColors:
       - storage.type
       - storage.modifier
     settings:
-      foreground: '#c792ea'
+      foreground: &keyword '#c792ea'
   - name: Operator, Misc
     scope:
       - keyword.control
@@ -619,14 +619,14 @@ tokenColors:
       - keyword.other.template
       - keyword.other.substitution
     settings:
-      foreground: '#89ddff'
+      foreground: &operator '#89ddff'
   - name: Tag
     scope:
       - entity.name.tag
       - meta.tag.sgml
       - markup.deleted.git_gutter
     settings:
-      foreground: '#f07178'
+      foreground: &tag '#f07178'
   - name: Function, Special Method
     scope:
       - entity.name.function
@@ -638,18 +638,18 @@ tokenColors:
       - meta.class-method.js entity.name.function.js
       - variable.function.constructor
     settings:
-      foreground: '#82aaff'
+      foreground: &function '#82aaff'
   - name: Block Level Variables
     scope:
       - meta.block variable.other
     settings:
-      foreground: '#f07178'
+      foreground: *tag
   - name: Other Variable, String Link
     scope:
       - support.other.variable
       - string.other.link
     settings:
-      foreground: '#f07178'
+      foreground: *tag
   - name: Number, Constant, Function Argument, Tag Attribute, Embedded
     scope:
       - constant.numeric
@@ -718,13 +718,13 @@ tokenColors:
       - entity.name.method.js
     settings:
       fontStyle: italic
-      foreground: '#82aaff'
+      foreground: *function
   - name: meta.method.js
     scope:
       - meta.class-method.js entity.name.function.js
       - variable.function.constructor
     settings:
-      foreground: '#82aaff'
+      foreground: *function
   - name: Attributes
     scope:
       - entity.other.attribute-name
@@ -751,7 +751,7 @@ tokenColors:
     scope:
       - source.sass keyword.control
     settings:
-      foreground: '#82aaff'
+      foreground: *function
   - name: Inserted
     scope:
       - markup.inserted
@@ -771,12 +771,12 @@ tokenColors:
     scope:
       - string.regexp
     settings:
-      foreground: '#89ddff'
+      foreground: *operator
   - name: Escape Characters
     scope:
       - constant.character.escape
     settings:
-      foreground: '#89ddff'
+      foreground: *operator
   - name: URL
     scope:
       - '*url*'
@@ -790,7 +790,7 @@ tokenColors:
       - tag.decorator.js punctuation.definition.tag.js
     settings:
       fontStyle: italic
-      foreground: '#82aaff'
+      foreground: *function
   - name: ES7 Bind Operator
     scope:
       - source.js constant.other.object.key.js string.unquoted.label.js
@@ -801,7 +801,7 @@ tokenColors:
     scope:
       - source.json meta.structure.dictionary.json support.type.property-name.json
     settings:
-      foreground: '#c792ea'
+      foreground: *keyword
   - name: JSON Key - Level 1
     scope:
       - source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json
@@ -826,17 +826,17 @@ tokenColors:
     scope:
       - source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json
     settings:
-      foreground: '#82aaff'
+      foreground: *function
   - name: JSON Key - Level 6
     scope:
       - source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json
     settings:
-      foreground: '#f07178'
+      foreground: *tag
   - name: JSON Key - Level 7
     scope:
       - source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json
     settings:
-      foreground: '#c792ea'
+      foreground: *keyword
   - name: JSON Key - Level 8
     scope:
       - source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json
@@ -852,7 +852,7 @@ tokenColors:
     scope:
       - text.html.markdown markup.inline.raw.markdown
     settings:
-      foreground: '#c792ea'
+      foreground: *keyword
   - name: Markdown - Markup Raw Inline Punctuation
     scope:
       - text.html.markdown markup.inline.raw.markdown punctuation.definition.raw.markdown
@@ -870,14 +870,14 @@ tokenColors:
       - markup.italic
     settings:
       fontStyle: italic
-      foreground: '#f07178'
+      foreground: *tag
   - name: Markup - Bold
     scope:
       - markup.bold
       - markup.bold string
     settings:
       fontStyle: bold
-      foreground: '#f07178'
+      foreground: *tag
   - name: Markup - Bold-Italic
     scope:
       - markup.bold markup.italic
@@ -888,7 +888,7 @@ tokenColors:
       - markup.quote markup.bold string
     settings:
       fontStyle: bold
-      foreground: '#f07178'
+      foreground: *tag
   - name: Markup - Underline
     scope:
       - markup.underline
@@ -909,12 +909,12 @@ tokenColors:
     scope:
       - string.other.link.title.markdown
     settings:
-      foreground: '#82aaff'
+      foreground: *function
   - name: Markdown - Link Description
     scope:
       - string.other.link.description.title.markdown
     settings:
-      foreground: '#c792ea'
+      foreground: *keyword
   - name: Markdown - Link Anchor
     scope:
       - constant.other.reference.link.markdown
@@ -924,7 +924,7 @@ tokenColors:
     scope:
       - markup.raw.block
     settings:
-      foreground: '#c792ea'
+      foreground: *keyword
   - name: Markdown - Raw Block Fenced
     scope:
       - markup.raw.block.fenced.markdown
@@ -966,7 +966,7 @@ tokenColors:
       foreground: '#98971a'
   - scope: markup.punctuation.list.beginning
     settings:
-      foreground: '#99c6ca'
+      foreground: *ansiBrightBlue
   - scope: meta.selector
     settings:
       foreground: '#7ec16e'
@@ -1020,7 +1020,7 @@ tokenColors:
       foreground: '#ebdbb2'
   - scope: module.node
     settings:
-      foreground: '#99c6ca'
+      foreground: *ansiBrightBlue
   - scope: support.type.property-name
     settings:
-      foreground: '#99c6ca'
+      foreground: *ansiBrightBlue
