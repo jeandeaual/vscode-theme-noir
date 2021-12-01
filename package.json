@@ -48,7 +48,7 @@
         "js-yaml": "^4.0.0",
         "markdown-extract": "^1.0.2",
         "ovsx": "^0.1.0",
-        "vsce": "^1.87.1"
+        "vsce": "^2.5.1"
     },
     "scripts": {
         "vscode:prepublish": "yarn convertTheme",
