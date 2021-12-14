@@ -7,7 +7,6 @@
             "label": "Package",
             "type": "shell",
             "command": "npx vsce package",
-            "dependsOn": "YAML to JSON",
             "group": {
                 "kind": "build",
                 "isDefault": true
