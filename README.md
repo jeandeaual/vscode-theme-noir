@@ -48,7 +48,7 @@ Pure black theme for Visual Studio Code.
 
 ```sh
 yarn install
-npx vsce package
+npx vsce package --yarn
 ```
 
 ## Release Notes

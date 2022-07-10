@@ -9,6 +9,7 @@
         "name": "Alexis Jeandeau"
     },
     "publisher": "jeandeaual",
+    "private": true,
     "repository": {
         "type": "git",
         "url": "https://github.com/jeandeaual/vscode-theme-noir"
